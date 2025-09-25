@@ -4,3 +4,6 @@ __pycache__/
 *.pyo
 *.pyd
 do_not_commit.py
+
+# Ignore outputs folder
+outputs/

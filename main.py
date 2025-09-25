@@ -1,13 +1,13 @@
 from src.models.song import Song
 from src.key_assignment.key_assignment import assign_random_keys
 from src.graph_builder.graph_builder import build_harmonic_graph
+from src.graph_builder.graph_visualizer import visualize_graph
 
 
-def test_full_pipeline():
+def main():
     """
-    Test the full pipeline with a small set of inputs.
+    Main function to execute the pipeline for harmonic graph visualization.
     """
-    # Input songs
     songs = [
         Song(title="Song A", artist="Artist A"),
         Song(title="Song B", artist="Artist B"),
@@ -20,6 +20,9 @@ def test_full_pipeline():
     # Step 2: Build harmonic graph
     graph = build_harmonic_graph(evaluated_songs)
 
-    # Assertions
-    assert len(graph.nodes) == len(songs)
-    assert len(graph.edges) >= 0
+    # Step 3: Visualize the graph
+    visualize_graph(graph)
+
+
+if __name__ == "__main__":
+    main()

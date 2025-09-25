@@ -1,10 +1,20 @@
+from src.models.song import Song
+from src.models.evaluated_song import EvaluatedSong, Key
 import random
-from typing import List, Dict
+from typing import List
 
 
-def assign_random_keys(songs: List[str]) -> List[Dict[str, str]]:
+def assign_random_keys(songs: List[Song]) -> List[EvaluatedSong]:
     """
-    Assigns random keys to a list of songs.
+    Assigns random keys and bpm to a list of songs.
     """
-    keys = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
-    return [{"song": song, "key": random.choice(keys)} for song in songs]
+    keys = list(Key)
+    return [
+        EvaluatedSong(
+            title=song.title,
+            artist=song.artist,
+            key=random.choice(keys),
+            bpm=random.randint(60, 180),
+        )
+        for song in songs
+    ]
