@@ -18,9 +18,7 @@ def build_harmonic_graph(songs: List[EvaluatedSong]) -> nx.Graph:
     # Add edges based on compatibility
     for i, song1 in enumerate(songs):
         for j, song2 in enumerate(songs):
-            if i < j and is_harmonically_compatible(
-                song1.key.value, song2.key.value
-            ):
+            if i < j and is_harmonically_compatible(song1.key, song2.key):
                 graph.add_edge(song1.title, song2.title)
 
     return graph

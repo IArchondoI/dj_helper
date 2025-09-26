@@ -2,23 +2,20 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class Key(Enum):
-    """
-    Enum representing musical keys.
-    """
+class Mode(Enum):
+    MAJOR = "M"
+    MINOR = "m"
 
-    A = "A"
-    A_SHARP = "A#"
-    B = "B"
-    C = "C"
-    C_SHARP = "C#"
-    D = "D"
-    D_SHARP = "D#"
-    E = "E"
-    F = "F"
-    F_SHARP = "F#"
-    G = "G"
-    G_SHARP = "G#"
+
+@dataclass(frozen=True)
+class MusicalKey:
+    key: str
+    mode: Mode
+    sharp: bool = False
+
+    def __str__(self):
+        sharp_symbol = "#" if self.sharp else ""
+        return f"{self.key}{sharp_symbol}{self.mode.value}"
 
 
 @dataclass
@@ -29,5 +26,5 @@ class EvaluatedSong:
 
     title: str
     artist: str
-    key: Key
+    key: MusicalKey
     bpm: int

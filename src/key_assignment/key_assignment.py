@@ -1,5 +1,5 @@
 from src.models.song import Song
-from src.models.evaluated_song import EvaluatedSong, Key
+from src.models.evaluated_song import EvaluatedSong, MusicalKey, Mode
 import random
 from typing import List
 from src.key_assignment.spotify_key_bpm_fetcher import fetch_key_and_bpm
@@ -9,7 +9,13 @@ def assign_random_keys(songs: List[Song]) -> List[EvaluatedSong]:
     """
     Assigns random keys and bpm to a list of songs.
     """
-    keys = list(Key)
+    keys = [
+        MusicalKey(key=note, mode=mode, sharp=sharp)
+        for note in ["C", "D", "E", "F", "G", "A", "B"]
+        for mode in [Mode.MAJOR, Mode.MINOR]
+        for sharp in [False, True]
+        if not (note == "E" and sharp) and not (note == "B" and sharp)
+    ]
     return [
         EvaluatedSong(
             title=song.title,
@@ -43,7 +49,13 @@ def assign_keys(
                     EvaluatedSong(
                         title=song.title,
                         artist=song.artist,
-                        key=Key(spotify_data["key"]),
+                        key=MusicalKey(
+                            key=spotify_data["key"].replace("#", ""),
+                            mode=Mode.MAJOR
+                            if "MAJOR" in spotify_data["key"]
+                            else Mode.MINOR,
+                            sharp="#" in spotify_data["key"],
+                        ),
                         bpm=spotify_data["bpm"],
                     )
                 )
