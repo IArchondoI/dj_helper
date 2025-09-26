@@ -7,3 +7,6 @@ do_not_commit.py
 
 # Ignore outputs folder
 outputs/
+
+# Ignore Spotify credentials
+src/key_assignment/spotify_credentials.py
