@@ -36,8 +36,13 @@ def load_songs_from_csv(
                 # Transform key and bpm into MusicalKey dataclass
                 if key and bpm:
                     mode = Mode.MAJOR if "MAJOR" in key else Mode.MINOR
-                    base_key = key.replace("_MAJOR", "").replace("_MINOR", "")
-                    sharp = "#" in base_key
+                    sharp = "SHARP" in key
+                    base_key = (
+                        key.strip()
+                        .replace("_MAJOR", "")
+                        .replace("_MINOR", "")
+                        .replace("_SHARP", "")
+                    )
                     base_key = base_key.replace("#", "")
                     evaluated_songs.append(
                         EvaluatedSong(

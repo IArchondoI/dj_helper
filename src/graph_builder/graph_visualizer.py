@@ -25,10 +25,14 @@ def visualize_graph(graph):
         )
         labels[node] = f"{title}\n{key}"
 
+    # Adjust layout to spread nodes further apart
+    pos = nx.spring_layout(graph, k=0.5)  # Increase `k` to spread nodes
+
     # Draw the graph with labels
-    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(12, 10))
     nx.draw(
         graph,
+        pos=pos,
         labels=labels,
         node_color="lightblue",
         edge_color="gray",
