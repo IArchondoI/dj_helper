@@ -2,7 +2,7 @@ from src.models.song import Song
 from src.models.evaluated_song import EvaluatedSong, MusicalKey, Mode
 import random
 from typing import List
-from src.key_assignment.spotify_key_bpm_fetcher import fetch_key_and_bpm
+from src.key_assignment.mistral_key_bpm_fetcher import fetch_key_and_bpm
 
 
 def assign_random_keys(songs: List[Song]) -> List[EvaluatedSong]:
@@ -28,35 +28,35 @@ def assign_random_keys(songs: List[Song]) -> List[EvaluatedSong]:
 
 
 def assign_keys(
-    songs: List[Song], use_spotipy: bool = False
+    songs: List[Song], use_mistral: bool = False
 ) -> List[EvaluatedSong]:
     """
     Assigns keys and BPM to a list of songs.
 
     Args:
         songs (List[Song]): List of songs to evaluate.
-        use_spotipy (bool): Whether to use Spotipy for key and BPM assignment.
+        use_mistral (bool): Whether to use Mistral for key and BPM assignment.
 
     Returns:
         List[EvaluatedSong]: List of evaluated songs with keys and BPM.
     """
-    if use_spotipy:
+    if use_mistral:
         evaluated_songs = []
         for song in songs:
             try:
-                spotify_data = fetch_key_and_bpm(song.title, song.artist)
+                mistral_data = fetch_key_and_bpm(song.title, song.artist)
                 evaluated_songs.append(
                     EvaluatedSong(
                         title=song.title,
                         artist=song.artist,
                         key=MusicalKey(
-                            key=spotify_data["key"].replace("#", ""),
+                            key=mistral_data["key"].replace("#", ""),
                             mode=Mode.MAJOR
-                            if "MAJOR" in spotify_data["key"]
+                            if mistral_data["major_minor"] == "Major"
                             else Mode.MINOR,
-                            sharp="#" in spotify_data["key"],
+                            sharp=mistral_data["sharp"],
                         ),
-                        bpm=spotify_data["bpm"],
+                        bpm=mistral_data["bpm"],
                     )
                 )
             except ValueError as e:

@@ -11,3 +11,4 @@ outputs/
 # Ignore Spotify credentials
 src/key_assignment/spotify_credentials.py
 .cache
+src/key_assignment/mistral_credentials.py

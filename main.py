@@ -6,6 +6,10 @@ import sys
 from pathlib import Path
 
 
+# Toggle to use Mistral for key and BPM assignment
+use_mistral = True
+
+
 def main(songs_path: Path):
     """
     Main function to execute the pipeline for harmonic graph visualization.
@@ -14,8 +18,7 @@ def main(songs_path: Path):
     songs, evaluated_songs = load_songs_from_csv(songs_path)
 
     # Assign keys to songs without key and BPM
-    use_spotipy = True
-    evaluated_songs.extend(assign_keys(songs, use_spotipy))
+    evaluated_songs.extend(assign_keys(songs, use_mistral))
 
     # Step 2: Build harmonic graph
     graph = build_harmonic_graph(evaluated_songs)
