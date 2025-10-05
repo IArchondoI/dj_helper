@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 # Toggle to use Mistral for key and BPM assignment
-use_mistral = True
+use_mistral = False
 
 
 def main(songs_path: Path):
